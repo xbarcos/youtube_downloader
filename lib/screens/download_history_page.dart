@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_file/open_file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:youtube_downloader/utils/snackbar_utils.dart';
 import '../controllers/download_controller.dart';
 
 class DownloadHistoryPage extends StatelessWidget {
@@ -70,11 +71,9 @@ class DownloadHistoryPage extends StatelessWidget {
                 onPressed: () async {
                   final result = await OpenFile.open(filePath);
                   if (result.type != ResultType.done) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Erro ao abrir o arquivo: ${result.message}'),
-                      ),
-                    );
+                    SnackbarUtils.showSnackbar('Erro ao abrir o arquivo',
+                                              result.message, Icons.error,
+                                              SnackbarType.danger);                    
                   }
                 },
               ),

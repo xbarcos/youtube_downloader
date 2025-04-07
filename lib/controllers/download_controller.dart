@@ -13,8 +13,8 @@ class DownloadController extends GetxController {
   var loading = false.obs;
   var title = ''.obs;
   var thumbnailUrl = ''.obs;
-  var duration = ''.obs; // Nova variável para a duração do vídeo
-  var channelName = ''.obs; // Nova variável para o nome do canal
+  var duration = ''.obs;
+  var channelName = ''.obs;
   var channelAvatarUrl = ''.obs;
 
   @override
@@ -74,16 +74,12 @@ class DownloadController extends GetxController {
 
     try {
       final video = await _service.yt.videos.get(url);
-
-      // Atualiza as informações do vídeo
       title.value = video.title;
       thumbnailUrl.value = video.thumbnails.standardResUrl;
       duration.value =
           video.duration?.toString().split('.').first ?? 'Desconhecida';
       channelName.value = video.author;
-
-      // Como o campo 'authorThumbnails' não existe, você pode omitir a imagem do canal
-      channelAvatarUrl.value = ''; // Deixe vazio ou use uma imagem padrão
+      channelAvatarUrl.value = '';
     } catch (e) {
       print("Erro ao buscar info: $e");
       SnackbarUtils.showSnackbar(
